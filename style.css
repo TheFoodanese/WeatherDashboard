@@ -1,28 +1,21 @@
 /* Global Styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #e8e8d0;
+    background-color: #ffffff;
     margin: 0;
     padding: 0;
 }
 
-.container-fluid {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
+
 
 /* Header Styles */
 .weather-header {
-    background-color: #6c9bca;
+    background-color: #4d48da;
     color: #fff;
-    padding: 20px;
     text-align: center;
+    height: 50px;
 }
 
-.weather-header h1 {
-    margin: 0;
-}
 
 /* Form Styles */
 #form-heading {
@@ -30,47 +23,65 @@ body {
 }
 
 .weather-search {
-    width: calc(100% - 100px);
+   
     margin-right: 10px;
-    padding: 8px;
-    border: 1px solid #ccc;
+    padding: 20px;
+    border: 10px solid #ccc;
 }
 
 .search-button {
-    background-color: #d7e53e;
+    background-color: #4576b1;
     color: #fff;
-    border: none;
-    padding: 8px 15px;
+    border-radius: 25px;
+    width: 5cm;
+    
     cursor: pointer;
 }
 
-/* Search History Styles */
-#history {
-    margin-top: 20px;
-}
+
 
 .list-group-item {
-    padding: 8px 15px;
+    padding: 9px;
     cursor: pointer;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    border: none;
+    border-radius: 25px;
     margin-bottom: 5px;
+    width: 5cm;
+    background-color: #85878e;
 }
 
-/* Today's Weather Styles */
-#today {
-    margin-top: 20px;
-}
 
-/* Forecast Styles */
-#forecast {
-    margin-top: 20px;
-}
 
-.forecast-item {
-    display: inline-block;
-    background-color: #fff;
-    border-radius: 5px;
+/* Style for each forecast card */
+.forecast-card {
+    width: calc(20% - 20px); /* Adjust as needed */
+    margin-right: 20px; /* Adjust as needed */
+    margin-bottom: 20px; /* Adjust as needed */
     padding: 10px;
-    margin-right: 10px;
+    background-color: #383e55;
+    border-radius: 5px;
+    color: #ffffff;
+}
+
+
+
+/* Style for the search history */
+#history {
+    display: flex;
+    flex-direction: column; /* Display items vertically */
+    padding-right: 900px; /* Add some padding to the right */
+}
+
+
+/* Style for the forecast section */
+#forecast {
+    display: flex;
+    flex-wrap: wrap; /* Allow forecast cards to wrap */
+}
+
+/* Style for forecast cards */
+.forecast-card {
+    width: calc(25% - 100px); /* Adjust width to fit four cards per row */
+    margin-right: 10px; /* Add some space between forecast cards */
+    margin-bottom: 10px; /* Add some space between rows */
 }

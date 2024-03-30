@@ -4,47 +4,91 @@ document.addEventListener('DOMContentLoaded', function() {
     const historyList = document.getElementById('history');
     const todaySection = document.getElementById('today');
     const forecastSection = document.getElementById('forecast');
-    const apiKey = '8f4360034de33b795d22db2e7a896dc9'; 
+    const apiKey = '8f4360034de33b795d22db2e7a896dc9'; // Replace with your API key
 
     // Event listener for form submission
-    searchForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-        const cityName = searchInput.value.trim();
-        if(cityName !== '') {
-            getWeather(cityName);
-            searchInput.value = ''; // Clear input field after submission
-        }
-    });
+    searchForm.addEventListener('submit', handleFormSubmit);
 
     // Event listener for clicking on search history
-    historyList.addEventListener('click', function(event) {
-        if(event.target.tagName === 'BUTTON') {
+    historyList.addEventListener('click', handleHistoryClick);
+
+    // Function to handle form submission
+    function handleFormSubmit(event) {
+        event.preventDefault();
+        const cityName = searchInput.value.trim();
+        if (cityName !== '') {
+            getForecast(cityName);
+            searchInput.value = ''; // Clear input field after submission
+        }
+    }
+
+    // Function to handle clicking on search history
+    function handleHistoryClick(event) {
+        if (event.target.tagName === 'BUTTON') {
             const cityName = event.target.dataset.city;
-            getWeather(cityName);
+            getForecast(cityName);
+        }
+    }
+
+    // Function to fetch 5-day forecast data
+function getForecast(cityName) {
+    const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}&units=metric`;
+
+    fetch(apiUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Forecast data not available');
+            }
+            return response.json();
+        })
+        .then(data => {
+            updateForecastUI(data);
+        })
+        .catch(error => {
+            console.error('Error fetching forecast:', error.message);
+            // Display error message to user
+            // Clear UI
+        });
+}
+
+// Function to filter forecast data to only include one forecast per day
+function filterForecastData(data) {
+    const filteredForecast = {};
+    data.list.forEach(forecast => {
+        const date = new Date(forecast.dt * 1000).toLocaleDateString();
+        if (!filteredForecast[date]) {
+            filteredForecast[date] = forecast;
         }
     });
+    return Object.values(filteredForecast);
+}
 
-    // Function to fetch weather data
-    function getWeather(cityName) {
-        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric`;
+// Function to update UI with 5-day forecast data
+function updateForecastUI(data) {
+    // Clear previous forecast data
+    forecastSection.innerHTML = '';
+    // Filter the forecast data to include only one forecast per day
+    const filteredData = filterForecastData(data);
 
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('City not found');
-                }
-                return response.json();
-            })
-            .then(data => {
-                updateWeatherUI(data);
-                saveToLocalStorage(cityName);
-            })
-            .catch(error => {
-                console.error('Error fetching weather:', error.message);
-                // Display error message to user
-                // Clear UI
-            });
-    }
+    // Iterate over forecast data and create forecast cards
+    data.list.forEach(forecast => {
+        const forecastDate = new Date(forecast.dt * 1000).toLocaleDateString();
+        const forecastIconUrl = `https://openweathermap.org/img/wn/${forecast.weather[0].icon}.png`;
+        const forecastTemperature = forecast.main.temp;
+        const forecastHumidity = forecast.main.humidity;
+
+        const forecastHTML = `
+            <div class="forecast-card">
+                <h3>${forecastDate}</h3>
+                <img src="${forecastIconUrl}" alt="Weather Icon">
+                <p>Temperature: ${forecastTemperature}°C</p>
+                <p>Humidity: ${forecastHumidity}%</p>
+            </div>
+        `;
+        forecastSection.innerHTML += forecastHTML;
+    });
+}
+
 
     // Function to update UI with weather data
     function updateWeatherUI(data) {
@@ -101,3 +145,4 @@ document.addEventListener('DOMContentLoaded', function() {
     // Call init to initialize the application
     init();
 });
+
