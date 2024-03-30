@@ -1,0 +1,76 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e8e8d0;
+    margin: 0;
+    padding: 0;
+}
+
+.container-fluid {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header Styles */
+.weather-header {
+    background-color: #6c9bca;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+.weather-header h1 {
+    margin: 0;
+}
+
+/* Form Styles */
+#form-heading {
+    margin-bottom: 10px;
+}
+
+.weather-search {
+    width: calc(100% - 100px);
+    margin-right: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+}
+
+.search-button {
+    background-color: #d7e53e;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+}
+
+/* Search History Styles */
+#history {
+    margin-top: 20px;
+}
+
+.list-group-item {
+    padding: 8px 15px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+/* Today's Weather Styles */
+#today {
+    margin-top: 20px;
+}
+
+/* Forecast Styles */
+#forecast {
+    margin-top: 20px;
+}
+
+.forecast-item {
+    display: inline-block;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    margin-right: 10px;
+}
